@@ -51,20 +51,23 @@ public class IndexController {
 
     @PostMapping("/accion/{id:.+}")
     public String crud(@PathVariable String id , HttpServletRequest request, Model model) {
-        Optional<Usuario> u = usuarioRepository.findById(Integer.valueOf(request.getParameter("id")));
 
-        if(id.equalsIgnoreCase("delete")){
-            usuarioRepository.delete(u.get());
-        }
-        else if(id.equalsIgnoreCase("update")){
-            model.addAttribute("u", u.get());
-            model.addAttribute("accion","Actualizar");
-            return "add_update";
+        if (!id.equals("add")) {            
+            Optional<Usuario> u = usuarioRepository.findById(Integer.valueOf(request.getParameter("id")));
+            
+            if(id.equalsIgnoreCase("delete")){
+                usuarioRepository.delete(u.get());
+            }
+            else if(id.equalsIgnoreCase("update")){
+                model.addAttribute("u", u.get());
+                model.addAttribute("accion","Actualizar");
+                return "add_update";
+            }
         }
         else{
             Usuario n = new Usuario();
             model.addAttribute("u", n);
-            model.addAttribute("accion","Agregar");
+
             return "add_update";
         }
 

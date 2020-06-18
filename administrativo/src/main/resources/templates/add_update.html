@@ -30,7 +30,7 @@
         <form th:action="@{/ufps/actualizar_datos}" th:method="post">
             <div class="form-group">
                 <label for="exampleInputEmail1">ID:</label>
-                <span th:text="${u.getId()}"></span>
+                <span th:text="${u.getId()}" th:value="${u.getId()}" name="id"></span>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Nombre:</label>
@@ -45,7 +45,7 @@
                 <input type="text" class="form-control" th:value="${u.getClave()}" name="clave" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Clave</label>
+                <label for="exampleInputEmail1">Email</label>
                 <input type="email" class="form-control" th:value="${u.getEmail()}" name="email" required>
             </div>
             <div class="form-group">
@@ -56,9 +56,8 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-danger" th:value="${accion}">               
-                TERMINAR
-                </span>
+            <button type="submit" class="btn btn-danger" th:value="${accion}">
+               
             </button>
         </form>
     </div>
