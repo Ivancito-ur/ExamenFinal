@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    
+    <link href="/src/main/resources/static/css/login.css" th:href="@{/css/index_ufps.css}" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFPS INDEX</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-ligth bg-danger">
+        <a class="navbar-brand" th:text="${u.getEmpresaBean().getNombre()}"></a>
+        <form class="form-inline" th:method="post" th:action="@{/logout}">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-success my-2 my-sm-0" type="submit">Cerrar sesion</button>
+        </form>
+      </nav>
+
+    <div class="container">        
+        <div class="row">
+            <div class="col-md-6" style="padding-top: 15px;">
+                <div class="card text-center">
+                    <div class="card-header">
+                      DATOS PERSONALES
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Actualizacion de los datos personasles</h5>
+                      <p class="card-text">Convivir con amor.</p>
+                      <a href="#" th:href = "@{/ufps/actualizar_datos_form}" class="btn btn-danger">Entrar</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Covid 19
+                    </div>
+                  </div>
+            </div>
+
+            <div class="col-md-6" style="padding-top: 15px;">
+                <div class="card text-center">
+                    <div class="card-header">
+                      PERSONA / FAMILIAR
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Registrar datos de su familiar</h5>
+                      <p class="card-text">Tu acompñanate te ama</p>
+                      <a href="#" th:href = "@{/ufps/actualizar_familiar_form}" class="btn btn-danger">Entrar</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                      Covid 19
+                    </div>
+                  </div>
+            </div>
+
+            <div class="col-md-6" style="padding-top: 15px;">
+                <div class="card text-center">
+                    <div class="card-header">
+                        CORMOBILIDADES
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Registra tus problemas de salud</h5>
+                      <p class="card-text">La salud primero</p>
+                      <a href="#" class="btn btn-danger">Entrar</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                      Covid 19
+                    </div>
+                  </div>
+            </div>
+
+            <div class="col-md-6" style="padding-top: 15px;">
+                <div class="card text-center">
+                    <div class="card-header">
+                      REGISTRO
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Registro a la institucion</h5>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                      <a href="#" class="btn btn-danger">Entrar</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Covid 19
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

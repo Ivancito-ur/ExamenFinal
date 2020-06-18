@@ -1,4 +1,4 @@
-package examen;
+package com.examen.administrativo.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;

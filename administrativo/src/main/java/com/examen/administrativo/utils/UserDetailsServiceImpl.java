@@ -2,6 +2,11 @@ package com.examen.administrativo.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import com.examen.administrativo.entities.Usuario;
+import com.examen.administrativo.repository.EmpresaRepository;
+import com.examen.administrativo.repository.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,46 +21,45 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UfpsRepository ufpsRepository;
+    EmpresaRepository empresaRepository;
 
     @Autowired
-    CorpolRepository corpolRepository;
+    UsuarioRepository usuarioRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String codigo) throws UsernameNotFoundException {
 
-        // Buscar el usuario con el repositorio y si no existe lanzar una exepcion
-        Ufps appUser = ufpsRepository.findById(Integer.valueOf(id))
-                .orElseThrow(() -> new UsernameNotFoundException("No existe usuario"));
+        Integer id = Integer.valueOf(codigo);
+
+        System.out.println(id);
+        Usuario appUser = usuarioRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("No existe usuario"));
+
+        System.out.println(appUser);
+        // String role = appUser.getRolBean().getDescripcion();
+
+        // // Buscar el usuario con el repositorio y si no existe lanzar una exepcion
+        // Ufps appUser2 = ufpsRepository.findById(Integer.valueOf(id))
+        //         .orElseThrow(() -> new UsernameNotFoundException("No existe usuario"));
 
         // Mapear nuestra lista de Authority con la de spring security
 
         List<GrantedAuthority> grantList = new ArrayList<>();
 
-        String aux = "";
-        
-        if (appUser.getPerfil().equalsIgnoreCase("ESTUDIANTE") || appUser.getPerfil().equalsIgnoreCase("DOCENTE") ||
-        appUser.getPerfil().equalsIgnoreCase("ADMINISTRATIVO")) {
-            aux="UFPS";
-        }
-        else{
-            aux="COLPOR";
-        }
-
-        GrantedAuthority authority = new SimpleGrantedAuthority(aux);
+        GrantedAuthority authority = new SimpleGrantedAuthority("Administrador");
         grantList.add(authority);
 
-        // List<GrantedAuthority> roles = new ArrayList<>();
-        // GrantedAuthority authority = new SimpleGrantedAuthority(appUser.getEmpresaUsuario().getPerfil());
-        // roles.add(authority);
-
-        // Set <GrantedAuthority> grantList = new HashSet<>();
-        // GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("USER");
-        // grantList.add(grantedAuthority);
-
+        
         // Crear El objeto UserDetails que va a ir en sesion y retornarlo.
-        UserDetails usuario = (UserDetails) new User(String.valueOf(appUser.getDocumento()), appUser.getClave(), grantList);
+        UserDetails usuario = (UserDetails) new User(String.valueOf(appUser.getId()), appUser.getClave(), grantList);
         System.out.println(usuario);
         return usuario;
     }
 }
+
+// List<GrantedAuthority> roles = new ArrayList<>();
+// GrantedAuthority authority = new SimpleGrantedAuthority(appUser.getEmpresaUsuario().getPerfil());
+// roles.add(authority);
+
+// Set <GrantedAuthority> grantList = new HashSet<>();
+// GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("USER");
+// grantList.add(grantedAuthority);

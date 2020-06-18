@@ -19,13 +19,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(resources).permitAll().antMatchers("/index","/montar", "/ufps" , "/email" ,"/colpor").permitAll()
-                .antMatchers("/ufps/**").hasAuthority("UFPS")
-                .antMatchers("/colpor/**").hasAuthority("COLPOR")
+        http.authorizeRequests().antMatchers(resources).permitAll().antMatchers("/montar").permitAll()
+                .antMatchers("/index/**").hasAuthority("Administrador")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")
-                .permitAll().defaultSuccessUrl("/datos")
+                .permitAll().defaultSuccessUrl("/index/")
                 .failureUrl("/login?error=true")
                 .and()
                 .logout().deleteCookies("JSESSIONID").permitAll().logoutSuccessUrl("/login?logout");
