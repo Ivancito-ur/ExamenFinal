@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.examen.administrativo.entities.Empresa;
 import com.examen.administrativo.entities.Usuario;
 import com.examen.administrativo.repository.EmpresaRepository;
+import com.examen.administrativo.repository.RolRepository;
 import com.examen.administrativo.repository.UsuarioRepository;
+import com.examen.administrativo.utils.PasswordG;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,6 +31,8 @@ public class IndexController {
     @Autowired
     EmpresaRepository empresaRepository;
     
+    @Autowired
+    RolRepository rolRepository;
     
 
     @GetMapping("/")
@@ -67,13 +71,51 @@ public class IndexController {
         else{
             Usuario n = new Usuario();
             model.addAttribute("u", n);
-
+            model.addAttribute("accion","Actualizar");
             return "add_update";
         }
-
         return "redirect:/index/tabla_usuarios";
     }
 
+    @PostMapping("/save")
+    public String save(HttpServletRequest request) {
+
+        Usuario a = usuarioRepository.findById(documentoSession()).get();
+        
+        PasswordG p = new PasswordG();
+        Usuario u = new Usuario();
+
+        int id =0;
+        System.out.println(request.getParameter("id") );
+        boolean f = request.getParameter("id") == null;
+        if (!f) {
+            id = Integer.valueOf(request.getParameter("id"));
+            u.setId(id);            
+        }
+
+        String usuario = request.getParameter("usuario");
+        String email = request.getParameter("email");
+        String rol = request.getParameter("rol");
+        int aux=0;
+        if (rol.equalsIgnoreCase("administrador")) {
+            aux=1;
+        }
+        String clave= request.getParameter("clave");
+        
+
+
+        u.setUsuario(usuario);
+        u.setEmail(email);
+        u.setRolBean(rolRepository.findById(aux).get());
+        u.setEmpresaBean(empresaRepository.findById(a.getEmpresaBean().getId()).get());
+        u.setClave(p.encriptador(clave));
+
+        
+        usuarioRepository.save(u);
+
+
+        return "redirect:/index/tabla_usuarios";
+    }
 
 
     public Integer documentoSession(){

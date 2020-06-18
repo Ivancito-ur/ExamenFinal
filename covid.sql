@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 18-06-2020 a las 04:53:16
--- Versión del servidor: 10.4.10-MariaDB
--- Versión de PHP: 7.3.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 18-06-2020 a las 16:25:51
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,14 +27,11 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `acceso`
 --
 
-DROP TABLE IF EXISTS `acceso`;
-CREATE TABLE IF NOT EXISTS `acceso` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `acceso` (
+  `id` int(11) NOT NULL,
   `registro` int(11) DEFAULT NULL,
   `fechareg` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `estado` int(11) DEFAULT NULL COMMENT 'Define el estado si fue correcto o se genera un error por no permitir el acceso',
-  PRIMARY KEY (`id`),
-  KEY `FK_acceso_registro` (`registro`)
+  `estado` int(11) DEFAULT NULL COMMENT 'Define el estado si fue correcto o se genera un error por no permitir el acceso'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacena el acceso de la persona a la institucion';
 
 -- --------------------------------------------------------
@@ -44,14 +40,11 @@ CREATE TABLE IF NOT EXISTS `acceso` (
 -- Estructura de tabla para la tabla `accesovisitante`
 --
 
-DROP TABLE IF EXISTS `accesovisitante`;
-CREATE TABLE IF NOT EXISTS `accesovisitante` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `accesovisitante` (
+  `id` int(11) NOT NULL,
   `fecha` date DEFAULT NULL,
   `temperatura` int(11) DEFAULT NULL,
-  `visitante` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_accesovisitante_visitante` (`visitante`)
+  `visitante` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -60,9 +53,8 @@ CREATE TABLE IF NOT EXISTS `accesovisitante` (
 -- Estructura de tabla para la tabla `basico`
 --
 
-DROP TABLE IF EXISTS `basico`;
-CREATE TABLE IF NOT EXISTS `basico` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `basico` (
+  `id` int(11) NOT NULL,
   `documento` varchar(20) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `telefono` varchar(20) DEFAULT NULL,
@@ -77,11 +69,7 @@ CREATE TABLE IF NOT EXISTS `basico` (
   `mas60` tinyint(1) DEFAULT NULL,
   `menos15` tinyint(1) DEFAULT NULL,
   `salud` tinyint(1) DEFAULT NULL,
-  `fechareg` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `FK_basico_eps` (`eps`),
-  KEY `FK_basico_modalidad` (`modalidad`),
-  KEY `FK_basico_tipo` (`tipo`)
+  `fechareg` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -90,8 +78,7 @@ CREATE TABLE IF NOT EXISTS `basico` (
 -- Estructura de tabla para la tabla `cormobilidad`
 --
 
-DROP TABLE IF EXISTS `cormobilidad`;
-CREATE TABLE IF NOT EXISTS `cormobilidad` (
+CREATE TABLE `cormobilidad` (
   `id` int(11) NOT NULL,
   `diabetes` tinyint(1) DEFAULT NULL,
   `cardio` tinyint(1) DEFAULT NULL,
@@ -102,8 +89,7 @@ CREATE TABLE IF NOT EXISTS `cormobilidad` (
   `epoc` tinyint(1) DEFAULT NULL,
   `nutricion` tinyint(1) DEFAULT NULL,
   `fumador` tinyint(1) DEFAULT NULL,
-  `fechareg` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`)
+  `fechareg` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacena la informaci?n de las enfermedades de las personas que ingresan a la Universdiad';
 
 -- --------------------------------------------------------
@@ -112,15 +98,13 @@ CREATE TABLE IF NOT EXISTS `cormobilidad` (
 -- Estructura de tabla para la tabla `empresa`
 --
 
-DROP TABLE IF EXISTS `empresa`;
-CREATE TABLE IF NOT EXISTS `empresa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `empresa` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(200) DEFAULT NULL COMMENT 'Almacena el nombre de la empresa',
   `endpoint` varchar(500) DEFAULT NULL COMMENT 'Almacena el endpoint para validar los datos de la empresa',
   `estado` tinyint(1) DEFAULT NULL,
-  `code` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Almacena la informacion de la empresa';
+  `code` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacena la informacion de la empresa';
 
 --
 -- Volcado de datos para la tabla `empresa`
@@ -128,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `empresa` (
 
 INSERT INTO `empresa` (`id`, `nombre`, `endpoint`, `estado`, `code`) VALUES
 (1, 'Universidad Francisco de Paula Santander', 'http://siaweb.ufps.edu.co/prueba.php', 1, 'ufps'),
-(2, 'Universidad Simón Bolivar', 'http://siaweb.ufps.edu.co/prueba.php', 1, 'unisimon');
+(2, 'Universidad Simón Bolivar', 'http://siaweb.ufps.edu.co/unisimon.php', 1, 'unisimon');
 
 -- --------------------------------------------------------
 
@@ -136,12 +120,10 @@ INSERT INTO `empresa` (`id`, `nombre`, `endpoint`, `estado`, `code`) VALUES
 -- Estructura de tabla para la tabla `eps`
 --
 
-DROP TABLE IF EXISTS `eps`;
-CREATE TABLE IF NOT EXISTS `eps` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+CREATE TABLE `eps` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `eps`
@@ -160,12 +142,10 @@ INSERT INTO `eps` (`id`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `modalidad`
 --
 
-DROP TABLE IF EXISTS `modalidad`;
-CREATE TABLE IF NOT EXISTS `modalidad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Almacena la modalidad de la persona';
+CREATE TABLE `modalidad` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacena la modalidad de la persona';
 
 --
 -- Volcado de datos para la tabla `modalidad`
@@ -181,8 +161,7 @@ INSERT INTO `modalidad` (`id`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `registro`
 --
 
-DROP TABLE IF EXISTS `registro`;
-CREATE TABLE IF NOT EXISTS `registro` (
+CREATE TABLE `registro` (
   `id` int(11) NOT NULL,
   `persona` int(11) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
@@ -194,9 +173,7 @@ CREATE TABLE IF NOT EXISTS `registro` (
   `dificultad` tinyint(1) DEFAULT NULL,
   `temperatura` decimal(3,1) DEFAULT NULL,
   `fechareg` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `covid` tinyint(1) DEFAULT NULL COMMENT 'Almacena si la persona ha estado en contacto ',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_registro` (`persona`,`fecha`)
+  `covid` tinyint(1) DEFAULT NULL COMMENT 'Almacena si la persona ha estado en contacto '
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacena el registro de ingreso del personal';
 
 -- --------------------------------------------------------
@@ -205,12 +182,10 @@ CREATE TABLE IF NOT EXISTS `registro` (
 -- Estructura de tabla para la tabla `rol`
 --
 
-DROP TABLE IF EXISTS `rol`;
-CREATE TABLE IF NOT EXISTS `rol` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Almacena informaci?n de los roles del docente';
+CREATE TABLE `rol` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacena informaci?n de los roles del docente';
 
 --
 -- Volcado de datos para la tabla `rol`
@@ -226,14 +201,11 @@ INSERT INTO `rol` (`id`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `tipo`
 --
 
-DROP TABLE IF EXISTS `tipo`;
-CREATE TABLE IF NOT EXISTS `tipo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tipo` (
+  `id` int(11) NOT NULL,
   `descripcion` varchar(100) DEFAULT NULL,
-  `empresa` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_tipo_empresa` (`empresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COMMENT='Almacena el tipo de personas de la empresa';
+  `empresa` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacena el tipo de personas de la empresa';
 
 --
 -- Volcado de datos para la tabla `tipo`
@@ -254,18 +226,21 @@ INSERT INTO `tipo` (`id`, `descripcion`, `empresa`) VALUES
 -- Estructura de tabla para la tabla `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
-CREATE TABLE IF NOT EXISTS `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL,
   `empresa` int(11) DEFAULT NULL,
   `usuario` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `clave` varchar(50) DEFAULT NULL,
-  `rol` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_usuario_empresa` (`empresa`),
-  KEY `FK_usuario_rol` (`rol`)
+  `clave` varchar(250) DEFAULT NULL,
+  `rol` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacena la informaci?n de los usuarios del sistema';
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `empresa`, `usuario`, `email`, `clave`, `rol`) VALUES
+(1, 1, '1234', 'ivanmauriciour@ufps.edu.co', '$2a$04$vkFf9YCz7qZDr8jEC72YMujTj7Olq9I88pvpyt/vLWEbI5mwFhE7e', 1);
 
 -- --------------------------------------------------------
 
@@ -273,18 +248,165 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 -- Estructura de tabla para la tabla `visitante`
 --
 
-DROP TABLE IF EXISTS `visitante`;
-CREATE TABLE IF NOT EXISTS `visitante` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `visitante` (
+  `id` int(11) NOT NULL,
   `documento` varchar(20) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `fechanacimiento` date DEFAULT NULL,
   `eps` int(11) DEFAULT NULL,
   `genero` varchar(1) DEFAULT NULL,
-  `empresa` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_visitante_empresa` (`empresa`)
+  `empresa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Almacen la infromaci?n de los visitantes';
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `acceso`
+--
+ALTER TABLE `acceso`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_acceso_registro` (`registro`);
+
+--
+-- Indices de la tabla `accesovisitante`
+--
+ALTER TABLE `accesovisitante`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_accesovisitante_visitante` (`visitante`);
+
+--
+-- Indices de la tabla `basico`
+--
+ALTER TABLE `basico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_basico_eps` (`eps`),
+  ADD KEY `FK_basico_modalidad` (`modalidad`),
+  ADD KEY `FK_basico_tipo` (`tipo`);
+
+--
+-- Indices de la tabla `cormobilidad`
+--
+ALTER TABLE `cormobilidad`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `empresa`
+--
+ALTER TABLE `empresa`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `eps`
+--
+ALTER TABLE `eps`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `modalidad`
+--
+ALTER TABLE `modalidad`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `registro`
+--
+ALTER TABLE `registro`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UK_registro` (`persona`,`fecha`);
+
+--
+-- Indices de la tabla `rol`
+--
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipo`
+--
+ALTER TABLE `tipo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_tipo_empresa` (`empresa`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_usuario_empresa` (`empresa`),
+  ADD KEY `FK_usuario_rol` (`rol`);
+
+--
+-- Indices de la tabla `visitante`
+--
+ALTER TABLE `visitante`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_visitante_empresa` (`empresa`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `acceso`
+--
+ALTER TABLE `acceso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `accesovisitante`
+--
+ALTER TABLE `accesovisitante`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `basico`
+--
+ALTER TABLE `basico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `empresa`
+--
+ALTER TABLE `empresa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `eps`
+--
+ALTER TABLE `eps`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `modalidad`
+--
+ALTER TABLE `modalidad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo`
+--
+ALTER TABLE `tipo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `visitante`
+--
+ALTER TABLE `visitante`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
