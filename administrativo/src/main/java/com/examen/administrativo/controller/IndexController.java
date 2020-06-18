@@ -42,6 +42,13 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/tabla_visitante")
+    public String tablaVisitante() {
+        
+
+        return "tabla_visitante";
+    }
+
 
     @GetMapping("/tabla_usuarios")
     public String tablaUsuario(Model model) {
