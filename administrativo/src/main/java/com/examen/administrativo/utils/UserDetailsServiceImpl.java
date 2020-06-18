@@ -33,8 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         System.out.println(id);
         Usuario appUser = usuarioRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("No existe usuario"));
-
-        System.out.println(appUser);
+        //System.out.println(appUser);
         // String role = appUser.getRolBean().getDescripcion();
 
         // // Buscar el usuario con el repositorio y si no existe lanzar una exepcion
@@ -45,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<GrantedAuthority> grantList = new ArrayList<>();
 
-        GrantedAuthority authority = new SimpleGrantedAuthority("Administrador");
+        GrantedAuthority authority = new SimpleGrantedAuthority(appUser.getRolBean().getDescripcion());
         grantList.add(authority);
 
         
