@@ -25,7 +25,7 @@
         </form>
     </nav>
 
-    <form action="" method="post">
+    <form th:action="@{/index/accion/add}" method="post">
 
         <div class="container">
             <div class="row">
@@ -54,17 +54,21 @@
                                         <td th:text="${country.getClave()}"></td>
                                         <td>
                                             <div>
-                                                <a href="#" class="btn btn-warning" type="submit"
-                                                    th:value="${country.getId()}">Delete</a>
+                                                <form th:action="@{/index/accion/delete}" th:method="post">
+                                                    <button class="btn btn-warning" type="submit"
+                                                        th:value="${country.getId()}" name="id">Delete</button>
+                                                </form>
                                                 <br>
-                                                <a href="#" class="btn btn-info" type="submit"
-                                                    th:value="${country.getId()}">Update</a>
+                                                <form th:action="@{/index/accion/update}" th:method="post">
+                                                    <button class="btn btn-info" type="submit"
+                                                        th:value="${country.getId()}" name="id">Update</button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <a href="#" type="submit" class="btn btn-danger">Agregar</a>
+                            <button type="submit" class="btn btn-danger" name="id">Agregar</button>
                         </div>
                         <div class="card-footer text-muted">
                             Covid 19
