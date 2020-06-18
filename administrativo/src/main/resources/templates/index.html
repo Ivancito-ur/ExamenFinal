@@ -21,7 +21,6 @@
     <nav class="navbar navbar-ligth bg-danger">
         <a class="navbar-brand" th:text="${u.getEmpresaBean().getNombre()}"></a>
         <form class="form-inline" th:method="post" th:action="@{/logout}">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-success my-2 my-sm-0" type="submit">Cerrar sesion</button>
         </form>
       </nav>
@@ -36,7 +35,7 @@
                     <div class="card-body">
                       <h5 class="card-title">Administrar usuarios</h5>
                       <p class="card-text">Convivir con amor.</p>
-                      <a href="#" th:href = "@{/ufps/actualizar_datos_form}" class="btn btn-danger">Entrar</a>
+                      <a href="#" th:href = "@{/index/tabla_usuarios}" class="btn btn-danger">Entrar</a>
                     </div>
                     <div class="card-footer text-muted">
                         Covid 19

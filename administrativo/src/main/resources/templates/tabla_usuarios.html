@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+    <link href="/src/main/resources/static/css/login.css" th:href="@{/css/index_ufps.css}" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-ligth bg-danger">
+        <a class="navbar-brand" th:text="${u.getEmpresaBean().getNombre()}"></a>
+        <form class="form-inline" th:method="post" th:action="@{/logout}">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Cerrar sesion</button>
+        </form>
+    </nav>
+
+    <form action="" method="post">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="padding-top: 15px;">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            USUARIOS
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Administrar usuarios</h5>
+                            <table id="countryList" class="table">
+                                <thead>
+                                    <tr>
+                                        <th> ID </th>
+                                        <th> Usaurio </th>
+                                        <th> Email </th>
+                                        <th> Clave </th>
+                                        <th> Accion </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="country : ${e.getUsuarios()}">
+                                        <td th:text="${country.getId()}"></td>
+                                        <td th:text="${country.getUsuario()}"></td>
+                                        <td th:text="${country.getEmail()}"></td>
+                                        <td th:text="${country.getClave()}"></td>
+                                        <td>
+                                            <div>
+                                                <a href="#" class="btn btn-warning" type="submit"
+                                                    th:value="${country.getId()}">Delete</a>
+                                                <br>
+                                                <a href="#" class="btn btn-info" type="submit"
+                                                    th:value="${country.getId()}">Update</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="#" type="submit" class="btn btn-danger">Agregar</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Covid 19
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

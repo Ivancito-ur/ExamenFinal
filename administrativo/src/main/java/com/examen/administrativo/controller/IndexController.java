@@ -2,6 +2,7 @@ package com.examen.administrativo.controller;
 
 import java.util.Optional;
 
+import com.examen.administrativo.entities.Empresa;
 import com.examen.administrativo.entities.Usuario;
 import com.examen.administrativo.repository.EmpresaRepository;
 import com.examen.administrativo.repository.UsuarioRepository;
@@ -28,15 +29,20 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-
-
         Optional<Usuario> u = usuarioRepository.findById(documentoSession());
-
         model.addAttribute("u", u.get());
-
-
-
         return "index";
+    }
+
+
+    @GetMapping("/tabla_usuarios")
+    public String tablaUsuario(Model model) {
+        Optional<Usuario> u = usuarioRepository.findById(documentoSession());
+        Optional<Empresa> e = empresaRepository.findById(u.get().getEmpresaBean().getId());
+        
+        model.addAttribute("e", e.get());
+        model.addAttribute("u", u.get());
+        return "tabla_usuarios";
     }
 
 
